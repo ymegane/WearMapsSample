@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "org.ymegnae.android.wearmapssample"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            manifestPlaceholders = [
+                    mapsApiKey: android_maps_api_key
+            ]
+        }
+        release {
+            manifestPlaceholders = [
+                    mapsApiKey: android_maps_api_key
+            ]
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile project(':wearmapssample-common')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    wearApp project(':wear')
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.google.android.gms:play-services-wearable:${playServiceVersion}"
+    compile "com.google.android.gms:play-services-location:${playServiceVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+
+    compile "com.github.hotchemi:permissionsdispatcher:${permissoinsDispatcherVersion}"
+    apt "com.github.hotchemi:permissionsdispatcher-processor:${permissoinsDispatcherVersion}"
+}
